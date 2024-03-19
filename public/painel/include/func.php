@@ -12,9 +12,9 @@ function conectar() {
 	// dados para conexao
 	
 	// HOSTNET
-	$db_host = "localhost";
-	$db_user = "pocinhos_marcoy";
-	$db_pass = "@Marcoy2030";
+	$db_host = "host.docker.internal";
+	$db_user = "root";
+	$db_pass = "root";
 	$db_name = "pocinhos_disbromig_xdissql708090";
 	
 	// conexao
