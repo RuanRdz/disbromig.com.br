@@ -10,8 +10,8 @@ conectar();
 validar();
 
 // carrega login e senha de clientes (para download do xls)
-$public_sql = mysql_query("SELECT nome,senha FROM public WHERE id='1'");
-while ($p=mysql_fetch_array($public_sql)) {
+$public_sql = mysqli_query($conn, "SELECT nome,senha FROM public WHERE id='1'");
+while ($p=mysqli_fetch_array($public_sql)) {
 	$p_login = $p["nome"];
 	$p_senha = $p["senha"];
 }
@@ -29,12 +29,12 @@ if (isset($do) && $do == "up") {
 		// tamanho em bytes, se maior que 15mb nao ira continuar
 		$tamanho_limite = 15728640;
 		if ($tamanho > $tamanho_limite) {
-			die ("Arquivo muito grande (".$tamanho."), o tamanho máximo permitido em bytes é de ".$tamanho_limite.", <a href='upload.php'>volte e tente novamente</a>.");
+			die ("Arquivo muito grande (".$tamanho."), o tamanho mï¿½ximo permitido em bytes ï¿½ de ".$tamanho_limite.", <a href='upload.php'>volte e tente novamente</a>.");
 		}
 		else {
 			// realiza upload no servidor
 			
-			// remove todas as planilhas anteriores para liberar espaço
+			// remove todas as planilhas anteriores para liberar espaï¿½o
 			if (file_exists($_SERVER['DOCUMENT_ROOT']."/estoque/planilha.xls")) {
 				unlink($_SERVER['DOCUMENT_ROOT']."/estoque/planilha.xls") or die();
 			}
@@ -44,7 +44,7 @@ if (isset($do) && $do == "up") {
 		}
 	}
 	else if ($arquivo["type"] != "application/vnd.ms-excel") {
-		die ("A extensão do arquivo não é .xls, <a href='upload.php'>volte e tente novamente</a> com uma planilha do excel (*.xls).");
+		die ("A extensï¿½o do arquivo nï¿½o ï¿½ .xls, <a href='upload.php'>volte e tente novamente</a> com uma planilha do excel (*.xls).");
 	}
 
 }
@@ -54,7 +54,7 @@ else if ($do == "alteraLogin") {
 	$n_senha = $_REQUEST["senhaPublic"];
 		
 	# Atualiza no SQL
-	$atualiza_public_sql = mysql_query("UPDATE public SET nome='".$n_login."', senha='".$n_senha."' WHERE id='1'") or die (mysql_error());
+	$atualiza_public_sql = mysqli_query($conn, "UPDATE public SET nome='".$n_login."', senha='".$n_senha."' WHERE id='1'") or die (mysqli_error($conn));
 	
 	# Atualiza Apache
 	// remove atual
@@ -153,7 +153,7 @@ function validar(form) {
 	
 		if (xls.value == "") {
 		
-			alert("Você deve selecionar um arquivo em seu computador (Apenas planilhas do excel - *.XLS).");
+			alert("Vocï¿½ deve selecionar um arquivo em seu computador (Apenas planilhas do excel - *.XLS).");
 			return false;
 		
 		}		
@@ -170,11 +170,11 @@ function validarLogin(form) {
 		var senha = document.getElementById("senhaPublic");
 		
 		if (login.value == "") {
-			alert("Você deve especificar um login.");
+			alert("Vocï¿½ deve especificar um login.");
 			return false;
 		}
 		else if (senha.value == "") {
-			alert("Você deve especificar uma senha.");
+			alert("Vocï¿½ deve especificar uma senha.");
 			return false;
 		}
 		else {

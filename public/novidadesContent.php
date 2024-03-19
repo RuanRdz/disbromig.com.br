@@ -7,9 +7,9 @@ require("painel/include/func.php");
 conectar();
  
 # PAGINACAO
-$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE novidades='1' AND status='1'");
+$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE novidades='1' AND status='1'");
 
-$pagina = $_REQUEST['pagina'];
+$pagina = isset($_REQUEST['pagina']) ? $_REQUEST['pagina'] : '';
 
 if (!$pagina) {
   $pagina = 1;
@@ -21,7 +21,7 @@ $num_por_pagina = 4; // numero de itens por pagina
 
 $primeiro_registro = ($pagina*$num_por_pagina) - $num_por_pagina;
 
-list($total_promocoes) = mysql_fetch_array($consulta_total);
+list($total_promocoes) = mysqli_fetch_array($consulta_total);
 
 $total_paginas = $total_promocoes/$num_por_pagina;
 
@@ -65,7 +65,7 @@ for ($x=1; $x<=$total_paginas; $x++) {
 # para exibir links (< anterior | 0-9 | proximo >) utilize o codigo: echo $anterior." | ".$n_paginas." | ".$proximo;
 
 // consulta novidades
-$novidades_sql = mysql_query("SELECT * FROM produtos WHERE novidades='1' AND status='1' ORDER BY id DESC LIMIT $primeiro_registro, $num_por_pagina");
+$novidades_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE novidades='1' AND status='1' ORDER BY id DESC LIMIT $primeiro_registro, $num_por_pagina");
  
  
 ?>
@@ -85,7 +85,7 @@ $novidades_sql = mysql_query("SELECT * FROM produtos WHERE novidades='1' AND sta
 				   <?php
                         
 						# numero total de produtos novos
-						$total_promo = mysql_result($consulta_total,0);
+						$total_promo = $total_promocoes;
 
 						# Caso nao houver nenhum produto em 'novidade' exibir mensagem:
 						if ($total_promo == 0) {
@@ -96,7 +96,7 @@ $novidades_sql = mysql_query("SELECT * FROM produtos WHERE novidades='1' AND sta
 							
 							$i = 1;
 							
-							while ($p=mysql_fetch_array($novidades_sql)) {
+							while ($p=mysqli_fetch_array($novidades_sql)) {
 							
 								$thumb = $p["thumb"];
 								$foto = $p["foto"];

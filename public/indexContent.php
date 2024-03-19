@@ -16,9 +16,9 @@ require("painel/include/func.php");
 conectar();
  
 // consulta promocoes
-$promocoes_sql = mysql_query("SELECT * FROM produtos WHERE promocao='1' AND status='1' ORDER BY id DESC LIMIT 1");
+$promocoes_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE promocao='1' AND status='1' ORDER BY id DESC LIMIT 1");
  
-$num_promocoes = mysql_num_rows(mysql_query("SELECT * FROM produtos WHERE promocao='1' AND status='1'")); // numero de produtos em promocao
+$num_promocoes = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM produtos WHERE promocao='1' AND status='1'")); // numero de produtos em promocao
  
 ?>
 <div id="contentBox">

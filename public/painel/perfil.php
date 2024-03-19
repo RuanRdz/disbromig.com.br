@@ -11,7 +11,7 @@ validar();
 
 $do = $_REQUEST["do"];
 
-$meu_id_sql = mysql_query("SELECT id, email, chave FROM usuarios WHERE nome = '".$_COOKIE["usuario"]."'") or die(mysql_error());
+$meu_id_sql = mysqli_query($conn, "SELECT id, email, chave FROM usuarios WHERE nome = '".$_COOKIE["usuario"]."'") or die(mysqli_error($conn));
 	
 $meu_id = mysql_result($meu_id_sql,0);
 $meu_email = mysql_result($meu_id_sql,0,1);
@@ -31,7 +31,7 @@ if (isset($do) && $do == "alterar") {
 	$altera_bd .= " WHERE id='".$meu_id."'";
 	
 	// executa sql
-	$salvar = mysql_query($altera_bd) or die (mysql_error());
+	$salvar = mysqli_query($conn, $altera_bd) or die (mysqli_error($conn));
 	
 	setcookie("key", "0", time()-3600, "/");
 	setcookie("usuario", "0", time()-3600, "/");
@@ -71,13 +71,13 @@ function validar(form) {
 	
 		if (nome.value == "") {
 		
-			alert("Você deve digitar um novo nome de usuário.");
+			alert("Vocï¿½ deve digitar um novo nome de usuï¿½rio.");
 			return false;
 		
 		}
 		else if (email.value == "") {
 		
-			alert("Você deve digitar um endereço de e-mail válido.");
+			alert("Vocï¿½ deve digitar um endereï¿½o de e-mail vï¿½lido.");
 			return false;
 		
 		}
@@ -189,11 +189,11 @@ function salvar() {
               </tr>
               <tr>
                 <td width="32%" valign="top">E-mail:</td>
-                <td width="68%"><input type="text" name="n_email" id="n_email" title="Digite um novo endereço de e-mail." value="<?=$meu_email; ?>" /></td>
+                <td width="68%"><input type="text" name="n_email" id="n_email" title="Digite um novo endereï¿½o de e-mail." value="<?=$meu_email; ?>" /></td>
               </tr>
               <tr>
                 <td valign="top">Senha:</td>
-                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso não queira alterar." /> 
+                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso nï¿½o queira alterar." /> 
                   <span class="tips-caracteristicas">(deixar em branco caso n&atilde;o deseje alterar).</span></td>
               </tr>
             </table>

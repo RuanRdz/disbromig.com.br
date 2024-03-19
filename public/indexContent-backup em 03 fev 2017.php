@@ -16,9 +16,9 @@ require("painel/include/func.php");
 conectar();
  
 // consulta promocoes
-$promocoes_sql = mysql_query("SELECT * FROM produtos WHERE promocao='1' AND status='1' ORDER BY id DESC LIMIT 1");
+$promocoes_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE promocao='1' AND status='1' ORDER BY id DESC LIMIT 1");
  
-$num_promocoes = mysql_num_rows(mysql_query("SELECT * FROM produtos WHERE promocao='1' AND status='1'")); // numero de produtos em promocao
+$num_promocoes = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM produtos WHERE promocao='1' AND status='1'")); // numero de produtos em promocao
  
 ?>
 <div id="contentBox">
@@ -49,7 +49,7 @@ $num_promocoes = mysql_num_rows(mysql_query("SELECT * FROM produtos WHERE promoc
         <li><a href="produtos.php?do=pesquisar&campo=tudo&filtro=qualquer&chave=talha*talhadeira">Talhas</a></li>
         <li><a href="produtos.php?do=pesquisar&campo=tudo&filtro=qualquer&chave=trole">Troles</a></li>
         <li><a href="produtos.php?do=pesquisar&campo=tudo&filtro=qualquer&chave=vibrador">Vibradores</a></li>
-        <li><a href="produtos.php?do=pesquisar&campo=tudo&filtro=qualquer&chave=acessório">Acess&oacute;rios</a></li>
+        <li><a href="produtos.php?do=pesquisar&campo=tudo&filtro=qualquer&chave=acessï¿½rio">Acess&oacute;rios</a></li>
       </ul>
       <p>Podemos ajud&aacute;-lo a buscar o <a href="produtos.php">produto</a> que voc&ecirc; necessita. <a href="informacoes.php">Fale conosco</a>, teremos satisfa&ccedil;&atilde;o em atend&ecirc;-lo com as melhores marcas.</p>
       <p align="center"><img src="images/brobras_logo_mini.jpg" width="130"/>&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/Gison_logo.jpg" width="100"/>&nbsp;&nbsp;&nbsp;&nbsp; <img src="images/rud_logo.gif" width="105"/>&nbsp;&nbsp;&nbsp;&nbsp;</p>

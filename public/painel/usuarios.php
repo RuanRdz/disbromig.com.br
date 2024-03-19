@@ -11,7 +11,7 @@ validar();
 
 $do = $_REQUEST["do"];
 
-$consulta_todos_sql = mysql_query("SELECT * FROM usuarios ORDER BY id ASC");
+$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM usuarios ORDER BY id ASC");
 
 if (isset($do) && $do == "novo") {
 
@@ -25,23 +25,23 @@ if (isset($do) && $do == "novo") {
 	$chave = md5("disbromig-".$nome.".com.br");
 	
 	// verifica se ja ha alguem com mesmo nome e/ou email
-	$valida_nome = mysql_query("SELECT nome FROM usuarios WHERE nome='".$nome."'");
+	$valida_nome = mysqli_query($conn, "SELECT nome FROM usuarios WHERE nome='".$nome."'");
 	
-	if (mysql_num_rows($valida_nome) == 1) { exit; }
+	if (mysqli_num_rows($valida_nome) == 1) { exit; }
 	
-	$valida_email = mysql_query("SELECT * FROM usuarios WHERE email='".$email."'");
+	$valida_email = mysqli_query($conn, "SELECT * FROM usuarios WHERE email='".$email."'");
 	
-	if (mysql_num_rows($valida_email) == 1) { exit;}
+	if (mysqli_num_rows($valida_email) == 1) { exit;}
 
 	// salva novo usuario no BD
-	$novo_usuario_sql = mysql_query("INSERT INTO usuarios (nome, email, senha, chave) VALUES ('".$nome."','".$email."','".$senha."','".$chave."')") or die ("Erro ao inserir novo usuário no Banco de Dados: ".mysql_error());
+	$novo_usuario_sql = mysqli_query($conn, "INSERT INTO usuarios (nome, email, senha, chave) VALUES ('".$nome."','".$email."','".$senha."','".$chave."')") or die ("Erro ao inserir novo usuï¿½rio no Banco de Dados: ".mysqli_error($conn));
 
 }
 else if (isset($do) && $do == "remover") {
 
 	$uid = $_REQUEST["uid"];
 	
-	$apaga_sql = mysql_query("DELETE FROM usuarios WHERE id='".$uid."'") or die ("Erro ao remover usuário do sistema: ".$mysql_error());
+	$apaga_sql = mysqli_query($conn, "DELETE FROM usuarios WHERE id='".$uid."'") or die ("Erro ao remover usuï¿½rio do sistema: ".$mysqli_error($conn));
 	
 	header("Location: usuarios.php");
 
@@ -74,13 +74,13 @@ function validar(form) {
 	
 		if (novo_nome.value == "") {
 		
-			alert("Você deve digitar um nome de usuário.");
+			alert("Vocï¿½ deve digitar um nome de usuï¿½rio.");
 			return false;
 		
 		}
 		else if (novo_senha.value == "") {
 		
-			alert("Não é possível cadastrar um novo usuário sem uma senha.");
+			alert("Nï¿½o ï¿½ possï¿½vel cadastrar um novo usuï¿½rio sem uma senha.");
 			return false;
 		
 		}		
@@ -92,7 +92,7 @@ function validar(form) {
 
 function confirma() {
 
-	var ok = window.confirm('Você tem certeza que deseja remover este usuário do sistema?');
+	var ok = window.confirm('Vocï¿½ tem certeza que deseja remover este usuï¿½rio do sistema?');
 	
 	if (ok) { return true; }
 	else { return false; }
@@ -259,7 +259,7 @@ function salvar() {
 		  	
 				$a = 1;
 		  
-				while ($r=mysql_fetch_array($consulta_todos_sql)) {
+				while ($r=mysqli_fetch_array($consulta_todos_sql)) {
 				
 					($a%2 == 1) ? print("<tr bgcolor='#ffffff' onMouseOver=\"this.bgColor='#FFE5CC'\" onMouseOut=\"this.bgColor='#ffffff'\">") : print("<tr bgcolor='#CFE4E9' onMouseOver=\"this.bgColor='#FFE5CC'\" onMouseOut=\"this.bgColor='#CFE4E9'\">");
 				
@@ -270,7 +270,7 @@ function salvar() {
 					
 					($r["nome"] == $_COOKIE["usuario"]) ? print("<a href='perfil.php'><img src='../images/editar.gif' border='0' title='Editar Dados' alt='Editar'></a>") : print("<a href=\"editar_usuario.php?uid=".$r["id"]."\"><img src='../images/editar.gif' border='0' title='Editar Dados' alt='Editar'></a>");
 					
-					echo "<a onclick='return confirma();' href=\"usuarios.php?do=remover&uid=".$r["id"]."\"><img src='../images/deletar.gif' border='0' title='Remover usuário do sistema' alt='Remover'></a></span></td>";
+					echo "<a onclick='return confirma();' href=\"usuarios.php?do=remover&uid=".$r["id"]."\"><img src='../images/deletar.gif' border='0' title='Remover usuï¿½rio do sistema' alt='Remover'></a></span></td>";
 						
 					echo "</tr>";
 

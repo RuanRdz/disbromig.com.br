@@ -13,11 +13,11 @@ $q = $_GET['q'];
 	}
 }*/
 
-$busca_produtos_sql = mysql_query("SELECT * FROM produtos WHERE titulo LIKE '".$q."%' ORDER BY titulo ASC");
+$busca_produtos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo LIKE '".$q."%' ORDER BY titulo ASC");
 
 header("Content-Type: text/html; charset=iso-8859-1"); 
 
-while ($c=mysql_fetch_array($busca_produtos_sql)) {
+while ($c=mysqli_fetch_array($busca_produtos_sql)) {
 
 	echo ucwords("".$c["titulo"]." (".$c["codigo"].")\r\n");
 

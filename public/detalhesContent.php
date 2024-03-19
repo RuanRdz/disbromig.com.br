@@ -8,7 +8,7 @@
     
 <?php /*require_once("php7_mysql_shim.php");*/
 
-	while ($p=mysql_fetch_array($produtos_sql)) {
+	while ($p=mysqli_fetch_array($produtos_sql)) {
 				 	
 		$thumb = $p["thumb"];
 		$foto = $p["foto"];
@@ -87,7 +87,7 @@
 
 		   echo "<p align='center'><b><u>Caracter&iacute;sticas T&eacute;cnicas</u></b></p>";
 			
-		   while ($c=mysql_fetch_array($caract_sql)) {
+		   while ($c=mysqli_fetch_array($caract_sql)) {
 				
 				$id_caract_reg = $c["id_caract_reg"];
 				$caract = $c["caract"];

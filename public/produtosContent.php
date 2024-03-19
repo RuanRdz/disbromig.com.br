@@ -7,8 +7,8 @@ require("painel/include/func.php");
 conectar();
  
 # PAGINACAO
-$pagina = $_REQUEST['pagina'];
-$do = $_REQUEST["do"]; // acao
+$pagina = isset($_REQUEST['pagina']) ? $_REQUEST['pagina'] : '';
+$do = isset($_REQUEST['do']) ? $_REQUEST['do'] : ''; // acao
 
 if (!$pagina) {
   $pagina = 1;
@@ -50,38 +50,38 @@ if (isset($do) && $do == "pesquisar") {
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por titulos que contenham as letras da palavra chave
 				if ($arrChave <= 1) {
-					$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
+					$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
+					$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
 				}
 				else if ($arrChave >= 2) {
-					$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
+					$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
+					$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
 				}
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por titulos que correspondem exatamente a palavra chave
 				if ($arrChave <= 1) {
-					$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
+					$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
+					$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
 				}
 				else if ($arrChave >= 2) {
-					$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
+					$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
+					$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1'");
 				}
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -90,29 +90,29 @@ if (isset($do) && $do == "pesquisar") {
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por titulos que contenham as letras da palavra chave
 				if ($arrChave <= 1) {
-					$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
+					$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
+					$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
 				}
 				else if ($arrChave >= 2) {
-					$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
+					$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
+					$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
 				}
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por titulos que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -121,35 +121,35 @@ if (isset($do) && $do == "pesquisar") {
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando em todas os campos que contenham as letras da palavra chave
 				if ($arrChave <= 1) {
-					$consulta_todos_sql = mysql_query("(SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1') ORDER BY titulo ASC") or die (mysql_error());
+					$consulta_todos_sql = mysqli_query($conn, "(SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1') ORDER BY titulo ASC") or die (mysqli_error($conn));
 					
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("(SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1') UNION (SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1')");
+					$consulta_total = mysqli_query($conn, "(SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1') UNION (SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1')");
 				
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1' UNION SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1' UNION SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND status='1' AND listagem='1'");
 				}
 				else if ($arrChave >= 2) {
-					$consulta_todos_sql = mysql_query("(SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1') ORDER BY titulo ASC") or die (mysql_error());
+					$consulta_todos_sql = mysqli_query($conn, "(SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1') ORDER BY titulo ASC") or die (mysqli_error($conn));
 					
 					// numero total de resultados encontrados para a paginacao
-					$consulta_total = mysql_query("(SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1') UNION (SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1')");
+					$consulta_total = mysqli_query($conn, "(SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1') UNION (SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1')");
 				
 					// numero total de resultados para exibir p/ usuario
-					$resultados_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1' UNION SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
+					$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave[0]."%' AND codigo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1' UNION SELECT * FROM produtos WHERE titulo LIKE '%".$chave[0]."%' AND titulo NOT LIKE '%".$chave[1]."%' AND status='1' AND listagem='1'");
 				}
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por ids que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("(SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1') ORDER BY titulo ASC") or die (mysql_error());
+				$consulta_todos_sql = mysqli_query($conn, "(SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1') ORDER BY titulo ASC") or die (mysqli_error($conn));
 							
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("(SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1') UNION (SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1')");
+				$consulta_total = mysqli_query($conn, "(SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1') UNION (SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1')");
 				
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("(SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1')");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "(SELECT * FROM produtos WHERE codigo = '".$chave[0]."' AND status='1' AND listagem='1') UNION (SELECT * FROM produtos WHERE titulo = '".$chave[0]."' AND status='1' AND listagem='1')");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 		
 		break;
@@ -158,13 +158,13 @@ if (isset($do) && $do == "pesquisar") {
 
 }
 else if (!isset($pesquisar)) {
-	$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE status='1' AND listagem='1'");
-	$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
+	$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE status='1' AND listagem='1'");
+	$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE status='1' AND listagem='1' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
 }
 
 # continua paginacao
 
-list($total_produtos) = mysql_fetch_array($consulta_total);
+list($total_produtos) = mysqli_fetch_array($consulta_total);
 
 $total_paginas = $total_produtos/$num_por_pagina;
 
@@ -259,7 +259,7 @@ for ($x=1; $x<=$total_paginas; $x++) {
             if (isset($_REQUEST["campo"]) && $_REQUEST["campo"] == "tudo") {
 				print("selected='selected'");
 			}
-			else if (!isset($_REQUEST["campo"]) || $_REQUEST["a"] != "pesquisar") {
+			else if (!isset($_REQUEST["campo"]) || (isset($_REQUEST["a"]) && $_REQUEST["a"] != "pesquisar")) {
 				print("selected='selected'");
 			}
 			?>>Tudo</option>
@@ -267,7 +267,7 @@ for ($x=1; $x<=$total_paginas; $x++) {
             if (isset($_REQUEST["campo"]) && $_REQUEST["campo"] == "titulo") {
 				print("selected='selected'");
 			}
-			else if (!isset($_REQUEST["campo"]) || $_REQUEST["a"] != "pesquisar") {
+			else if (!isset($_REQUEST["campo"]) || (isset($_REQUEST["a"]) && $_REQUEST["a"] != "pesquisar")) {
 				//print("selected='selected'");
 			}
 			?> >T&iacute;tulo</option>
@@ -279,7 +279,7 @@ for ($x=1; $x<=$total_paginas; $x++) {
             if (isset($_REQUEST["filtro"]) && $_REQUEST["filtro"] == "qualquer") {
 				print("selected='selected'");
 			}
-			else if (!isset($_REQUEST["filtro"]) || $_REQUEST["a"] != "pesquisar") {
+			else if (!isset($_REQUEST["filtro"]) || (isset($_REQUEST["a"]) && $_REQUEST["a"] != "pesquisar")) {
 				//print("selected='selected'");
 			}
 			?>>Todas as letras</option>
@@ -295,7 +295,7 @@ for ($x=1; $x<=$total_paginas; $x++) {
 				   <?php
                         
 						# numero de produtos encontrado
-						if (mysql_num_rows($consulta_todos_sql) == 0) {
+						if (mysqli_num_rows($consulta_todos_sql) == 0) {
 							// nenhum, exibir msg
 							print("<p align='center'>Nenhum produto encontrado.</p>");
 						}
@@ -303,7 +303,7 @@ for ($x=1; $x<=$total_paginas; $x++) {
 						
 							$i = 1;
 							
-							while ($p=mysql_fetch_array($consulta_todos_sql)) {
+							while ($p=mysqli_fetch_array($consulta_todos_sql)) {
 							
 								$thumb = $p["thumb"];
 								$foto = $p["foto"];

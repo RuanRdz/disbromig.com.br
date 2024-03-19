@@ -10,9 +10,9 @@ conectar();
 validar();
 
 // consulta ultimas informacoes recebidas
-$informacoes_sql = mysql_query("SELECT * FROM solicitacoes ORDER BY id_solicitacao DESC LIMIT 3") or die (mysql_error());
+$informacoes_sql = mysqli_query($conn, "SELECT * FROM solicitacoes ORDER BY id_solicitacao DESC LIMIT 3") or die (mysqli_error($conn));
 
-$num_info = mysql_num_rows(mysql_query("SELECT * FROM solicitacoes"));
+$num_info = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM solicitacoes"));
 
 ?>
 
@@ -82,7 +82,7 @@ $num_info = mysql_num_rows(mysql_query("SELECT * FROM solicitacoes"));
       	<div class="promo-texto">
         	<?php
 			
-			while ($x=mysql_fetch_array($informacoes_sql)) {
+			while ($x=mysqli_fetch_array($informacoes_sql)) {
 				
 				echo "<p>-&rsaquo; <a href='visualizar.php?solicitacao=".$x["id_solicitacao"]."'>";
 				echo ucwords($x["nome"]);

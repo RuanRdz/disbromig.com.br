@@ -14,7 +14,7 @@ $status = $_REQUEST["status"];
 $pid = $_REQUEST["pid"]; // product id
 
 # PAGINACAO
-$pagina = $_REQUEST['pagina'];
+$pagina = isset($_REQUEST['pagina']) ? $_REQUEST['pagina'] : '';
 
 if (!$pagina) {
   $pagina = 1;
@@ -48,10 +48,10 @@ if (isset($do) && $do == "remover") {
 			$remover[$i] = $_POST["apagar_".$i];
 
 			# apaga produto(s) no banco de dados e todos seus registros (caracteristicas selecionadas)
-			$busca_dados = mysql_query("SELECT * FROM produtos WHERE id='".$remover[$i]."'") or die (mysql_error());
+			$busca_dados = mysqli_query($conn, "SELECT * FROM produtos WHERE id='".$remover[$i]."'") or die (mysqli_error($conn));
 			
 			// nenhum id encontrado
-			if (mysql_num_rows($busca_dados) == 0) { 
+			if (mysqli_num_rows($busca_dados) == 0) { 
 	
 				//die ("<b>Erro:</b> Este or&ccedil;amento n&atilde;o existe no banco de dados");
 	
@@ -59,7 +59,7 @@ if (isset($do) && $do == "remover") {
 			// id encontrado, remover do banco
 			else {
 			
-				while($h=mysql_fetch_array($busca_dados)) {
+				while($h=mysqli_fetch_array($busca_dados)) {
 					$endereco_thumb = $h["thumb"];
 					$endereco_img = $h["foto"];
 					
@@ -70,8 +70,8 @@ if (isset($do) && $do == "remover") {
 				}
 
 				// remove produto
-				$remove_grupo_produtos_sql = mysql_query("DELETE FROM produtos WHERE id = '".$remover[$i]."' LIMIT 1") or die (mysql_error());
-				$apaga_caract = mysql_query("DELETE FROM caract_reg WHERE produto='".$remover[$i]."'") or die(mysql_error());
+				$remove_grupo_produtos_sql = mysqli_query($conn, "DELETE FROM produtos WHERE id = '".$remover[$i]."' LIMIT 1") or die (mysqli_error($conn));
+				$apaga_caract = mysqli_query($conn, "DELETE FROM caract_reg WHERE produto='".$remover[$i]."'") or die(mysqli_error($conn));
 
 			}
 		
@@ -80,9 +80,9 @@ if (isset($do) && $do == "remover") {
 	}
 	else {
 		
-		$dados_prod_sql = mysql_query("SELECT * FROM produtos WHERE id='".$pid."'");
+		$dados_prod_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE id='".$pid."'");
 		
-		while ($j=mysql_fetch_array($dados_prod_sql)) {
+		while ($j=mysqli_fetch_array($dados_prod_sql)) {
 			
 			$endereco_thumb = $j["thumb"];
 			$endereco_img = $j["foto"];
@@ -93,8 +93,8 @@ if (isset($do) && $do == "remover") {
 			
 		}
 		
-		$apaga_sql = mysql_query("DELETE FROM produtos WHERE id='".$pid."'") or die ("Erro ao remover produto do sistema: ".$mysql_error());
-		$apaga_caract = mysql_query("DELETE FROM caract_reg WHERE produto='".$pid."'") or die (mysql_error());
+		$apaga_sql = mysqli_query($conn, "DELETE FROM produtos WHERE id='".$pid."'") or die ("Erro ao remover produto do sistema: ".$mysqli_error($conn));
+		$apaga_caract = mysqli_query($conn, "DELETE FROM caract_reg WHERE produto='".$pid."'") or die (mysqli_error($conn));
 	
 	}
 	
@@ -106,11 +106,11 @@ else if (isset($do) && $do == "alterar" && isset($status)) {
 	
 	// altera status do produto	
 	if ($status == "on") {
-		$status_on_sql = mysql_query("UPDATE produtos SET status='1' WHERE id='".$pid."'") or die ("Erro ao alterar status do produto: ".mysql_error());
+		$status_on_sql = mysqli_query($conn, "UPDATE produtos SET status='1' WHERE id='".$pid."'") or die ("Erro ao alterar status do produto: ".mysqli_error($conn));
 		header("Location: lista_produtos.php");
 	}
 	else if ($status == "off") {
-		$status_on_sql = mysql_query("UPDATE produtos SET status='0' WHERE id='".$pid."'") or die ("Erro ao alterar status do produto: ".mysql_error());
+		$status_on_sql = mysqli_query($conn, "UPDATE produtos SET status='0' WHERE id='".$pid."'") or die ("Erro ao alterar status do produto: ".mysqli_error($conn));
 		header("Location: lista_produtos.php");
 	}
 	
@@ -128,21 +128,21 @@ else if (isset($do) && $do == "pesquisar") {
 			
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por titulos que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave."%'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave."%'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por titulos que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE titulo = '".$chave."' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo = '".$chave."' ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave."'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave."'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM produtos WHERE titulo = '".$chave."'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE titulo = '".$chave."'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -150,21 +150,21 @@ else if (isset($do) && $do == "pesquisar") {
 			
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por titulos que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave."%'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave."%'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por titulos que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM produtos WHERE codigo = '".$chave."' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo = '".$chave."' ORDER BY codigo ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave."'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave."'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM produtos WHERE codigo = '".$chave."'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo = '".$chave."'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -172,25 +172,25 @@ else if (isset($do) && $do == "pesquisar") {
 		
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando em todas os campos que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("(SELECT * FROM produtos WHERE id LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE valor LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE promocao LIKE '%".$chave."%') ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina") or die (mysql_error());
+				$consulta_todos_sql = mysqli_query($conn, "(SELECT * FROM produtos WHERE id LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE valor LIKE '%".$chave."%') UNION (SELECT * FROM produtos WHERE promocao LIKE '%".$chave."%') ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina") or die (mysqli_error($conn));
 				
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("(SELECT COUNT(*) FROM produtos WHERE id LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE valor LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE promocao LIKE '%".$chave."%')");
+				$consulta_total = mysqli_query($conn, "(SELECT COUNT(*) FROM produtos WHERE id LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE codigo LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE titulo LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE valor LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM produtos WHERE promocao LIKE '%".$chave."%')");
 			
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM produtos WHERE id LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE valor LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE promocao LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE id LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE codigo LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE titulo LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE valor LIKE '%".$chave."%' UNION SELECT * FROM produtos WHERE promocao LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por ids que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("(SELECT * FROM produtos WHERE id = '".$chave."') UNION (SELECT * FROM produtos WHERE codigo = '".$chave."') UNION (SELECT * FROM produtos WHERE titulo = '".$chave."') UNION (SELECT * FROM produtos WHERE valor = '".$chave."') UNION (SELECT * FROM produtos WHERE promocao = '".$chave."') ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina") or die (mysql_error());
+				$consulta_todos_sql = mysqli_query($conn, "(SELECT * FROM produtos WHERE id = '".$chave."') UNION (SELECT * FROM produtos WHERE codigo = '".$chave."') UNION (SELECT * FROM produtos WHERE titulo = '".$chave."') UNION (SELECT * FROM produtos WHERE valor = '".$chave."') UNION (SELECT * FROM produtos WHERE promocao = '".$chave."') ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina") or die (mysqli_error($conn));
 							
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("(SELECT COUNT(*) FROM produtos WHERE id = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE valor = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE promocao = '".$chave."')");
+				$consulta_total = mysqli_query($conn, "(SELECT COUNT(*) FROM produtos WHERE id = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE codigo = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE titulo = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE valor = '".$chave."') UNION (SELECT COUNT(*) FROM produtos WHERE promocao = '".$chave."')");
 				
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("(SELECT * FROM produtos WHERE id = '".$chave."') UNION (SELECT * FROM produtos WHERE codigo = '".$chave."') UNION (SELECT * FROM produtos WHERE titulo = '".$chave."') UNION (SELECT * FROM produtos WHERE valor = '".$chave."') UNION (SELECT * FROM produtos WHERE promocao = '".$chave."')");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "(SELECT * FROM produtos WHERE id = '".$chave."') UNION (SELECT * FROM produtos WHERE codigo = '".$chave."') UNION (SELECT * FROM produtos WHERE titulo = '".$chave."') UNION (SELECT * FROM produtos WHERE valor = '".$chave."') UNION (SELECT * FROM produtos WHERE promocao = '".$chave."')");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 		
 		break;
@@ -199,12 +199,12 @@ else if (isset($do) && $do == "pesquisar") {
 
 }
 else if (!isset($pesquisar)) {
-	$consulta_total = mysql_query("SELECT COUNT(*) FROM produtos");
-	$consulta_todos_sql = mysql_query("SELECT * FROM produtos ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina") or die (mysql_error());
+	$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM produtos");
+	$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM produtos ORDER BY titulo ASC LIMIT $primeiro_registro, $num_por_pagina") or die (mysqli_error($conn));
 }
 
 # continua paginacao
-list($total_produtos) = mysql_fetch_array($consulta_total) or die (mysql_error());
+list($total_produtos) = mysqli_fetch_array($consulta_total) or die (mysqli_error($conn));
 
 $total_paginas = $total_produtos/$num_por_pagina;
 
@@ -224,7 +224,7 @@ if ($pagina > 1) {
 		$anterior = "<a href=\"lista_produtos.php?pagina=$prev&listar=".$_REQUEST["listar"]."\">&lt; Anterior</a>";
 	}
 			
-} else { // senão não há link para a página anterior
+} else { // senï¿½o nï¿½o hï¿½ link para a pï¿½gina anterior
 		
 	$anterior = "Anterior";
 			
@@ -244,7 +244,7 @@ if ($total_paginas > $pagina) {
 	}
 			
 			
-} else { // senão não há link para a próxima página
+} else { // senï¿½o nï¿½o hï¿½ link para a prï¿½xima pï¿½gina
 		
 	$proximo = "Pr&oacute;ximo";
 			
@@ -255,7 +255,7 @@ $n_paginas = "";
 		
 for ($x=1; $x<=$total_paginas; $x++) {
 		
-	if ($x==$pagina) { // se estivermos na página corrente, não exibir o link para visualização desta página
+	if ($x==$pagina) { // se estivermos na pï¿½gina corrente, nï¿½o exibir o link para visualizaï¿½ï¿½o desta pï¿½gina
 	   $n_paginas .= " [$x] ";
 		
 	} else {
@@ -303,13 +303,13 @@ function validar(form) {
 	
 		if (novo_nome.value == "") {
 		
-			alert("Você deve digitar um nome de usuário.");
+			alert("Vocï¿½ deve digitar um nome de usuï¿½rio.");
 			return false;
 		
 		}
 		else if (novo_senha.value == "") {
 		
-			alert("Não é possível cadastrar um novo usuário sem uma senha.");
+			alert("Nï¿½o ï¿½ possï¿½vel cadastrar um novo usuï¿½rio sem uma senha.");
 			return false;
 		
 		}		
@@ -321,7 +321,7 @@ function validar(form) {
 
 function confirma() {
 
-	var ok = window.confirm('Você tem certeza que deseja remover o(s) produto(s) selecionado(s) do sistema?');
+	var ok = window.confirm('Vocï¿½ tem certeza que deseja remover o(s) produto(s) selecionado(s) do sistema?');
 	
 	if (ok) {
 		//document.apagaProdutos.submit();
@@ -492,7 +492,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
           <?php
 		  	
 				# numero de produtos encontrado
-				if (mysql_num_rows($consulta_todos_sql) == 0) {
+				if (mysqli_num_rows($consulta_todos_sql) == 0) {
 					// nenhum, exibir msg
 					print("<p align='center'>Nenhum produto encontrado.</p>");
 				}
@@ -500,7 +500,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 				
 					$a = 1;
 			  
-					while ($r=mysql_fetch_array($consulta_todos_sql)) {
+					while ($r=mysqli_fetch_array($consulta_todos_sql)) {
 					
 						($a%2 == 1) ? print("<tr bgcolor='#ffffff' onMouseOver=\"this.bgColor='#FFE5CC'\" onMouseOut=\"this.bgColor='#ffffff'\">") : print("<tr bgcolor='#CFE4E9' onMouseOver=\"this.bgColor='#FFE5CC'\" onMouseOut=\"this.bgColor='#CFE4E9'\">");
 					

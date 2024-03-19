@@ -14,14 +14,14 @@ $msg = $_REQUEST["msg"];
 
 $uid = $_REQUEST["uid"]; // recebe id do usuario
 
-$consulta_sql = mysql_query("SELECT * FROM usuarios WHERE id = '".$uid."'") or die(mysql_error()); // consulta dados do usuario no BD
+$consulta_sql = mysqli_query($conn, "SELECT * FROM usuarios WHERE id = '".$uid."'") or die(mysqli_error($conn)); // consulta dados do usuario no BD
 
-$total = mysql_num_rows($consulta_sql); // numero de registros encontrados com aquele ID
+$total = mysqli_num_rows($consulta_sql); // numero de registros encontrados com aquele ID
 
 ($total == 0) ? $mensagem = "<div align='center'>Nenhum usu&aacute;rio foi encontrado com esse ID.<br><a href=\"javascript:history.go(-1);\">Voltar e tentar novamente</a></div><br />" : "";
 
 // obtem nome e email
-while ($x=mysql_fetch_array($consulta_sql)) {
+while ($x=mysqli_fetch_array($consulta_sql)) {
 
 	$unome = $x["nome"];
 	$uemail = $x["email"];
@@ -34,9 +34,9 @@ if (isset($do) && $do == "alterar") {
 	$n_senha = addslashes($_REQUEST["n_senha"]);
 	$n_email = addslashes($_REQUEST["n_email"]);
 	
-	$validacao_sql = mysql_query("SELECT nome, email FROM usuarios") or die (mysql_error());
+	$validacao_sql = mysqli_query($conn, "SELECT nome, email FROM usuarios") or die (mysqli_error($conn));
 	
-	while ($v=mysql_fetch_array($validacao_sql)) {
+	while ($v=mysqli_fetch_array($validacao_sql)) {
 	
 		if ($n_nome == $v["nome"] && $v["nome"] != $unome) {
 			header("Location: editar_usuario.php?do=aviso&msg=nome&uid=".$_REQUEST["uid"]."");
@@ -57,7 +57,7 @@ if (isset($do) && $do == "alterar") {
 	$altera_bd .= " WHERE id='".$uid."'";
 	
 	// executa sql
-	$salvar = mysql_query($altera_bd) or die (mysql_error());
+	$salvar = mysqli_query($conn, $altera_bd) or die (mysqli_error($conn));
 	
 	// redireciona
 	header("Location: usuarios.php");
@@ -90,13 +90,13 @@ function validar(form) {
 	
 		if (nome.value == "") {
 		
-			alert("Você deve digitar um novo nome de usuário.");
+			alert("Vocï¿½ deve digitar um novo nome de usuï¿½rio.");
 			return false;
 		
 		}
 		else if (email.value == "") {
 		
-			alert("Você deve digitar um endereço de e-mail válido.");
+			alert("Vocï¿½ deve digitar um endereï¿½o de e-mail vï¿½lido.");
 			return false;
 		
 		}
@@ -212,13 +212,13 @@ function salvar() {
               </tr>
               <tr>
                 <td width="39%" valign="top">E-mail:</td>
-                <td width="61%"><input type="text" name="n_email" id="n_email" title="Digite um novo endereço de e-mail." value="<?=$uemail; ?>" />
+                <td width="61%"><input type="text" name="n_email" id="n_email" title="Digite um novo endereï¿½o de e-mail." value="<?=$uemail; ?>" />
                 <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "email") ? print("<div class='invalido'>N&atilde;o &eacute; permitido mais de um usu&aacute;rio com mesmo endere&ccedil;o de e-mail no sistema.</div>") : ""; ?>
                 </td>
               </tr>
               <tr>
                 <td valign="top">Nova Senha:</td>
-                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso não queira alterar." /> 
+                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso nï¿½o queira alterar." /> 
                   <br /><span class="tips-caracteristicas">(deixar em branco caso n&atilde;o deseje alterar).</span></td>
               </tr>
             </table>

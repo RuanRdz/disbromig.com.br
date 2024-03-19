@@ -110,7 +110,7 @@ EOHTML;
 	$swift->batchSend($message, $recipients, new Swift_Address("disbromig@disbromig.com.br", "Disbromig"));*/
 	
 	// salva no bd
-	$nova_solicitacao_sql = mysql_query("INSERT INTO solicitacoes (nome, empresa, cidade, estado, endereco, telefone, email, produtos, comentarios, data) VALUES ('".$nome."','".$empresa."','".$cidade."','".$estado."','".$endereco."','".$telefone."','".$email."','".$produtos."','".$comentarios."','".$date."')") or die (mysql_error());
+	$nova_solicitacao_sql = mysqli_query($conn, "INSERT INTO solicitacoes (nome, empresa, cidade, estado, endereco, telefone, email, produtos, comentarios, data) VALUES ('".$nome."','".$empresa."','".$cidade."','".$estado."','".$endereco."','".$telefone."','".$email."','".$produtos."','".$comentarios."','".$date."')") or die (mysqli_error($conn));
 
 }
 

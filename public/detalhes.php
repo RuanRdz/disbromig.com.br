@@ -5,17 +5,17 @@ require("painel/include/func.php");
  
 conectar();
 
-$pid = (int)$_REQUEST["pid"];
+$pid = (int) isset($_REQUEST["pid"]) ? $_REQUEST["pid"] : '';
 
 // consulta produtos
-$produtos_sql = mysql_query("SELECT * FROM produtos WHERE status='1' AND id='".$pid."'");
-if(mysql_num_rows($produtos_sql)==0){
+$produtos_sql = mysqli_query($conn, "SELECT * FROM produtos WHERE status='1' AND id='".$pid."'");
+if(mysqli_num_rows($produtos_sql)==0){
 	header("Location:http://www.disbromig.com.br/");
 }else{
 // consulta caracteristicas cadastradas para este produto
-$caract_sql = mysql_query("SELECT * FROM caract_reg WHERE produto='".$pid."' ORDER BY caract ASC");
+$caract_sql = mysqli_query($conn, "SELECT * FROM caract_reg WHERE produto='".$pid."' ORDER BY caract ASC");
 
-$num_caract = mysql_num_rows($caract_sql);
+$num_caract = mysqli_num_rows($caract_sql);
  }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -24,15 +24,15 @@ $num_caract = mysql_num_rows($caract_sql);
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
-<meta name="description" content="A Disbromig Ferramentas Pneumáticas é uma distribuidora autorizada da marca Brobrás, atua distribuindo ferramentas pneumáticas para os setores de Mineração, Siderúrgicas, Fundições, Metalúrgicas, Eletro-Eletrônicas, Eletro-Domésticos, Indústrias Alimentícias, Auto Peças, Indústrias Automobilísticas, Cimenteira e Construção Civil.">
+<meta name="description" content="A Disbromig Ferramentas Pneumï¿½ticas ï¿½ uma distribuidora autorizada da marca Brobrï¿½s, atua distribuindo ferramentas pneumï¿½ticas para os setores de Mineraï¿½ï¿½o, Siderï¿½rgicas, Fundiï¿½ï¿½es, Metalï¿½rgicas, Eletro-Eletrï¿½nicas, Eletro-Domï¿½sticos, Indï¿½strias Alimentï¿½cias, Auto Peï¿½as, Indï¿½strias Automobilï¿½sticas, Cimenteira e Construï¿½ï¿½o Civil.">
 
-<meta name="keywords" content="bomba imersão centrífuga desincrustadores êmbolos esmerilhadeiras ferramentaria furadeira lixadeiras pistolas  marteletes socadores talhas turbinas troles vibradores">
+<meta name="keywords" content="bomba imersï¿½o centrï¿½fuga desincrustadores ï¿½mbolos esmerilhadeiras ferramentaria furadeira lixadeiras pistolas  marteletes socadores talhas turbinas troles vibradores">
 
-<meta name="author" content="Disbromig Ferramentas Pneumáticas/ www.disbromig.com.br">
+<meta name="author" content="Disbromig Ferramentas Pneumï¿½ticas/ www.disbromig.com.br">
 
 <meta name="distribution" content="Global">
 
-<meta name="copyright" content="Disbromig Ferramentas Pneumáticas © 2007 ">
+<meta name="copyright" content="Disbromig Ferramentas Pneumï¿½ticas ï¿½ 2007 ">
 
 <meta name="rating" content="General">
 

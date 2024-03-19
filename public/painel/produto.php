@@ -12,9 +12,9 @@ validar();
 $do = $_REQUEST["do"];
 $msg = $_REQUEST["msg"];
 
-$consulta_lista = mysql_query("SELECT * FROM caracteristicas ORDER BY nome ASC");
+$consulta_lista = mysqli_query($conn, "SELECT * FROM caracteristicas ORDER BY nome ASC");
 
-$lista_total = mysql_num_rows($consulta_lista);
+$lista_total = mysqli_num_rows($consulta_lista);
 
 if (isset($do) && $do == "novo") {
 
@@ -47,7 +47,7 @@ if (isset($do) && $do == "novo") {
 
 	// valida tamanho
 	if ($tamanho_foto > 407936) {
-		print "<script language='javascript'> alert('A foto não pode ser maior que 400 kb'); window.history.go(-1); </script>\n";
+		print "<script language='javascript'> alert('A foto nï¿½o pode ser maior que 400 kb'); window.history.go(-1); </script>\n";
 		exit;
 	}
 
@@ -163,7 +163,7 @@ if (isset($do) && $do == "novo") {
 			
 					
 			}
-			else { die("A imagem forncedia não é válida, seu formato deve ser JPG, GIF ou PNG.<br><a href='javascript:history.go(-1)'>Clique aqui para voltar</a><br><br>".$foto["error"]); }
+			else { die("A imagem forncedia nï¿½o ï¿½ vï¿½lida, seu formato deve ser JPG, GIF ou PNG.<br><a href='javascript:history.go(-1)'>Clique aqui para voltar</a><br><br>".$foto["error"]); }
 	
 	}
 	
@@ -191,12 +191,12 @@ if (isset($do) && $do == "novo") {
 	$chave_uniq = uniqid();
 	
 	// salva produto no BD
-	$adicionar = mysql_query("INSERT INTO produtos (chave, titulo, codigo, valor, categoria, descricao, foto, thumb, promocao, promoValor, listagem, novidades, status) VALUES ('$chave_uniq','$titulo','$codigo','$valor','$categoria','$descricao','$end_foto','$end_thumb','$promo','$promoValor','$listagem','$novidades','$status')") or die ("Erro ao cadastrar novo produto: ".mysql_error());
+	$adicionar = mysqli_query($conn, "INSERT INTO produtos (chave, titulo, codigo, valor, categoria, descricao, foto, thumb, promocao, promoValor, listagem, novidades, status) VALUES ('$chave_uniq','$titulo','$codigo','$valor','$categoria','$descricao','$end_foto','$end_thumb','$promo','$promoValor','$listagem','$novidades','$status')") or die ("Erro ao cadastrar novo produto: ".mysqli_error($conn));
 	
 	if ($adicionar) {
 		
 		// id do novo produto
-		$produto_id_sql = mysql_query("SELECT id FROM produtos WHERE chave='".$chave_uniq."'");
+		$produto_id_sql = mysqli_query($conn, "SELECT id FROM produtos WHERE chave='".$chave_uniq."'");
 		$prod_id = mysql_result($produto_id_sql,0);
 		
 		# ADICIONA NOVAS CARACTERISTICAS TECNICAS NA TABELA caracteristcas E DEPOIS caract_reg SE HOUVER NOVAS
@@ -215,15 +215,15 @@ if (isset($do) && $do == "novo") {
 				if ($nova_caract_field[$z] != "") {
 				
 					# Verifica se ja existe uma caracteristica igual a esta no bd
-					$consulta_caract = mysql_query("SELECT * FROM caracteristicas WHERE nome='".$nova_caract_field[$z]."'") or die (mysql_error());
+					$consulta_caract = mysqli_query($conn, "SELECT * FROM caracteristicas WHERE nome='".$nova_caract_field[$z]."'") or die (mysqli_error($conn));
 					
-					if (mysql_num_rows($consulta_caract) == 0) {
+					if (mysqli_num_rows($consulta_caract) == 0) {
 				
 						// Salva nova caracteristica na tabela caracteristicas
-						$nova_caract_sql = mysql_query("INSERT INTO caracteristicas (nome, status) VALUES ('".$nova_caract_field[$z]."','1')") or die (mysql_error());
+						$nova_caract_sql = mysqli_query($conn, "INSERT INTO caracteristicas (nome, status) VALUES ('".$nova_caract_field[$z]."','1')") or die (mysqli_error($conn));
 						
 						// Agora salva na caract_reg
-						$nova_caractReg_sql = mysql_query("INSERT INTO caract_reg (produto, caract, valor) VALUES ('".$prod_id."','".$nova_caract_field[$z]."','".$nova_caract_valor[$z]."')") or die (mysql_error());
+						$nova_caractReg_sql = mysqli_query($conn, "INSERT INTO caract_reg (produto, caract, valor) VALUES ('".$prod_id."','".$nova_caract_field[$z]."','".$nova_caract_valor[$z]."')") or die (mysqli_error($conn));
 						
 					}
 				
@@ -240,12 +240,12 @@ if (isset($do) && $do == "novo") {
 			if (!is_null($caract_id[$c])) {
 		
 				// busca caracteristicas
-				$caracteristicas_sql = mysql_query("SELECT nome FROM caracteristicas WHERE id_caracteristicas = ".$caract_id[$c]."");
+				$caracteristicas_sql = mysqli_query($conn, "SELECT nome FROM caracteristicas WHERE id_caracteristicas = ".$caract_id[$c]."");
 				
 				$caract_texto = mysql_result($caracteristicas_sql,0);
 				
 				// salva caracteristicas
-				$caract_sql = mysql_query("INSERT INTO caract_reg (produto, caract, valor) VALUES ('".$prod_id."', '".$caract_texto."','".$caract_valor[$c]."')");
+				$caract_sql = mysqli_query($conn, "INSERT INTO caract_reg (produto, caract, valor) VALUES ('".$prod_id."', '".$caract_texto."','".$caract_valor[$c]."')");
 			
 			}
 		
@@ -280,10 +280,10 @@ function validar(form) {
 	
 	with(form) {
 	
-		if (form.titulo.value == "") { alert('Digite um título para este produto.'); return false; }
-		else if (form.codigo.value == "") { alert('Digite o código do produto.'); return false; }
+		if (form.titulo.value == "") { alert('Digite um tï¿½tulo para este produto.'); return false; }
+		else if (form.codigo.value == "") { alert('Digite o cï¿½digo do produto.'); return false; }
 		else if (form.categoria.selected == "1") { alert('Informe o valor do produto.'); return false; }
-		else if (document.getElementById('promo').checked == true && document.getElementById('promo-valor').value == "") { alert("Informe a porcentagem de promoção para este produto."); return false; }
+		else if (document.getElementById('promo').checked == true && document.getElementById('promo-valor').value == "") { alert("Informe a porcentagem de promoï¿½ï¿½o para este produto."); return false; }
 		else { 
 			
 			var form = $('novo-produto');
@@ -411,14 +411,14 @@ function adicionar(valor) {
         <legend><label for="titulo">T&iacute;tulo</label></legend>
        	<input name="titulo" type="text" id="titulo" title="T&iacute;tulo" size="70" maxlength="255" />
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "titulo") ? print("<div class='invalido'>Você deve preencher o campo título.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "titulo") ? print("<div class='invalido'>Vocï¿½ deve preencher o campo tï¿½tulo.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-cod">
         <legend><label for="codigo">C&oacute;digo</label></legend>
         <input name="codigo" type="text" id="codigo" title="C&oacute;digo" size="70" maxlength="20" />
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "codigo") ? print("<div class='invalido'>Você deve preencher o campo código.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "codigo") ? print("<div class='invalido'>Vocï¿½ deve preencher o campo cï¿½digo.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-valor">
@@ -434,7 +434,7 @@ function adicionar(valor) {
             <option value="2">M&aacute;quinas</option>
         </select>
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "categoria") ? print("<div class='invalido'>Você deve selecionar uma categoria.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "categoria") ? print("<div class='invalido'>Vocï¿½ deve selecionar uma categoria.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-desc">
@@ -493,7 +493,7 @@ function adicionar(valor) {
 				
 				$n = 1;
 				
-				while ($x=mysql_fetch_array($consulta_lista)) {
+				while ($x=mysqli_fetch_array($consulta_lista)) {
 				
 					$c_id = $x["id_caracteristicas"];
 					$c_nome = $x["nome"];

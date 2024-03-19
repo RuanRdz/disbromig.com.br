@@ -13,9 +13,9 @@ validar();
 $sid = $_REQUEST["solicitacao"];
 
 // busca informacoes no bd
-$solicitacao_sql = mysql_query("SELECT * FROM solicitacoes WHERE id_solicitacao='".$sid."'");
+$solicitacao_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE id_solicitacao='".$sid."'");
 
-while ($r=mysql_fetch_array($solicitacao_sql)) {
+while ($r=mysqli_fetch_array($solicitacao_sql)) {
 	extract($r);
 }
 

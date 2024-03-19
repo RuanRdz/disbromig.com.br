@@ -4,15 +4,15 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
-<meta name="description" content="A Disbromig Ferramentas Pneumáticas é uma distribuidora autorizada da marca Brobrás, atua distribuindo ferramentas pneumáticas para os setores de Mineração, Siderúrgicas, Fundições, Metalúrgicas, Eletro-Eletrônicas, Eletro-Domésticos, Indústrias Alimentícias, Auto Peças, Indústrias Automobilísticas, Cimenteira e Construção Civil.">
+<meta name="description" content="A Disbromig Ferramentas PneumÃ¡ticas Ã© uma distribuidora autorizada da marca Brobrï¿½s, atua distribuindo ferramentas pneumï¿½ticas para os setores de Mineraï¿½ï¿½o, Siderï¿½rgicas, Fundiï¿½ï¿½es, Metalï¿½rgicas, Eletro-Eletrï¿½nicas, Eletro-Domï¿½sticos, Indï¿½strias Alimentï¿½cias, Auto Peï¿½as, Indï¿½strias Automobilï¿½sticas, Cimenteira e Construï¿½ï¿½o Civil.">
 
-<meta name="keywords" content="bomba imersão centrífuga desincrustadores êmbolos esmerilhadeiras ferramentaria furadeira lixadeiras pistolas  marteletes socadores talhas turbinas troles vibradores">
+<meta name="keywords" content="bomba imersï¿½o centrï¿½fuga desincrustadores ï¿½mbolos esmerilhadeiras ferramentaria furadeira lixadeiras pistolas  marteletes socadores talhas turbinas troles vibradores">
 
-<meta name="author" content="Disbromig Ferramentas Pneumáticas/ www.disbromig.com.br">
+<meta name="author" content="Disbromig Ferramentas Pneumï¿½ticas/ www.disbromig.com.br">
 
 <meta name="distribution" content="Global">
 
-<meta name="copyright" content="Disbromig Ferramentas Pneumáticas © 2007 ">
+<meta name="copyright" content="Disbromig Ferramentas Pneumï¿½ticas ï¿½ 2007 ">
 
 <meta name="rating" content="General">
 

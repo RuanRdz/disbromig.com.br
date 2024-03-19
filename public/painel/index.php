@@ -21,9 +21,9 @@ if ($do == "login") {
 	
 	$smd5 = md5($senha);
 	
-	$valida_usuario = mysql_query("SELECT * FROM usuarios WHERE nome='".$user."' AND senha='".$smd5."' LIMIT 1") or die ("Erro ao validar usuário: ".mysql_error());
+	$valida_usuario = mysqli_query($conn, "SELECT * FROM usuarios WHERE nome='".$user."' AND senha='".$smd5."' LIMIT 1") or die ("Erro ao validar usuï¿½rio: ".mysqli_error($conn));
 
-	if (mysql_num_rows($valida_usuario) == 1) {
+	if (mysqli_num_rows($valida_usuario) == 1) {
 	
 		// cria cookie para validar usuario no sistema
 		$cookie_A = md5("disbromig-".$user.".com.br");
@@ -36,7 +36,7 @@ if ($do == "login") {
 		header("Location: painel.php");
 		
 	}
-	else if (mysql_num_rows($valida_usuario) != 1) {
+	else if (mysqli_num_rows($valida_usuario) != 1) {
 		
 		// usuario inexistente ou dados invalidos
 		header("Location: index.php?do=aviso");
@@ -72,7 +72,7 @@ else if ($do == "logout") {
 function validar(form) {
 	
 	with (form) {
-		if (form.usuario.value == "") { alert("Por favor entre com o nome de usuário"); return false; }
+		if (form.usuario.value == "") { alert("Por favor entre com o nome de usuï¿½rio"); return false; }
 		else if (form.senha.value == "") { alert("Por favor entre com a senha"); return false; }
 		else { return true; }
 	}
@@ -115,7 +115,7 @@ function validar(form) {
 	
 		if (isset($_REQUEST["do"]) && $_REQUEST["do"] == "aviso") {
 		
-			print("<div class='invalido'>Dados inválidos ou usuário inexistente.</div>");
+			print("<div class='invalido'>Dados invï¿½lidos ou usuï¿½rio inexistente.</div>");
 			
 		}
 		

@@ -12,7 +12,7 @@ $do = $_REQUEST["do"];
 $sid = $_REQUEST["sid"]; // id
 
 # PAGINACAO
-$pagina = $_REQUEST['pagina'];
+$pagina = isset($_REQUEST['pagina']) ? $_REQUEST['pagina'] : '';
 
 if (!$pagina) {
   $pagina = 1;
@@ -47,10 +47,10 @@ if (isset($do) && $do == "remover") {
 			$remover[$i] = $_POST["apagar_".$i];
 
 			# apaga produto(s) no banco de dados e todos seus registros (caracteristicas selecionadas)
-			$busca_dados = mysql_query("SELECT * FROM solicitacoes WHERE id_solicitacao='".$remover[$i]."'") or die (mysql_error());
+			$busca_dados = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE id_solicitacao='".$remover[$i]."'") or die (mysqli_error($conn));
 			
 			// nenhum id encontrado
-			if (mysql_num_rows($busca_dados) == 0) { 
+			if (mysqli_num_rows($busca_dados) == 0) { 
 	
 				//die ("<b>Erro:</b> Este or&ccedil;amento n&atilde;o existe no banco de dados");
 	
@@ -59,7 +59,7 @@ if (isset($do) && $do == "remover") {
 			else {
 
 				// remove
-				$remove_grupo_solicitacoes_sql = mysql_query("DELETE FROM solicitacoes WHERE id_solicitacao = '".$remover[$i]."' LIMIT 1") or die (mysql_error());
+				$remove_grupo_solicitacoes_sql = mysqli_query($conn, "DELETE FROM solicitacoes WHERE id_solicitacao = '".$remover[$i]."' LIMIT 1") or die (mysqli_error($conn));
 
 			}
 		
@@ -68,7 +68,7 @@ if (isset($do) && $do == "remover") {
 	}
 	else {
 	
-		$apaga_sql = mysql_query("DELETE FROM solicitacoes WHERE id_solicitacao='".$sid."'") or die ("Erro ao remover solicita&ccedil;&atilde;o do sistema: ".$mysql_error());
+		$apaga_sql = mysqli_query($conn, "DELETE FROM solicitacoes WHERE id_solicitacao='".$sid."'") or die ("Erro ao remover solicita&ccedil;&atilde;o do sistema: ".$mysqli_error($conn));
 	
 	}
 	
@@ -88,21 +88,21 @@ else if (isset($do) && $do == "pesquisar") {
 			
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por nomes que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%' ORDER BY nome ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%' ORDER BY nome ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE nome LIKE '%".$chave."%'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE nome LIKE '%".$chave."%'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por nomes que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE nome = '".$chave."' ORDER BY nome ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE nome = '".$chave."' ORDER BY nome ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE nome = '".$chave."'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE nome = '".$chave."'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE nome = '".$chave."'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE nome = '".$chave."'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -110,21 +110,21 @@ else if (isset($do) && $do == "pesquisar") {
 			
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por titulos que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%' ORDER BY email ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%' ORDER BY email ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE email LIKE '%".$chave."%'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE email LIKE '%".$chave."%'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por titulos que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE email = '".$chave."' ORDER BY email ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE email = '".$chave."' ORDER BY email ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE email = '".$chave."'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE email = '".$chave."'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE email = '".$chave."'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE email = '".$chave."'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -132,21 +132,21 @@ else if (isset($do) && $do == "pesquisar") {
 			
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por titulos que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%' ORDER BY empresa ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%' ORDER BY empresa ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE empresa LIKE '%".$chave."%'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE empresa LIKE '%".$chave."%'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por titulos que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE empresa = '".$chave."' ORDER BY empresa ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE empresa = '".$chave."' ORDER BY empresa ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE empresa = '".$chave."'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE empresa = '".$chave."'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE empresa = '".$chave."'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE empresa = '".$chave."'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -154,21 +154,21 @@ else if (isset($do) && $do == "pesquisar") {
 			
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando por titulos que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%' ORDER BY produtos ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%' ORDER BY produtos ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE produtos LIKE '%".$chave."%'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE produtos LIKE '%".$chave."%'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por titulos que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes WHERE produtos = '".$chave."' ORDER BY produtos ASC LIMIT $primeiro_registro, $num_por_pagina");
+				$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE produtos = '".$chave."' ORDER BY produtos ASC LIMIT $primeiro_registro, $num_por_pagina");
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes WHERE produtos = '".$chave."'");
+				$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes WHERE produtos = '".$chave."'");
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE produtos = '".$chave."'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE produtos = '".$chave."'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			
 		break;
@@ -176,25 +176,25 @@ else if (isset($do) && $do == "pesquisar") {
 		
 			if ($filtro == "qualquer") {
 				// consulta o banco procurando em todas os campos que contenham as letras da palavra chave
-				$consulta_todos_sql = mysql_query("(SELECT * FROM solicitacoes WHERE id_solicitacao LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%') ORDER BY id_solicitacao DESC") or die (mysql_error());
+				$consulta_todos_sql = mysqli_query($conn, "(SELECT * FROM solicitacoes WHERE id_solicitacao LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%') UNION (SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%') ORDER BY id_solicitacao DESC") or die (mysqli_error($conn));
 				
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("(SELECT COUNT(*) FROM solicitacoes WHERE id_solicitacao LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE email LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE nome LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE empresa LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE produtos LIKE '%".$chave."%')");
+				$consulta_total = mysqli_query($conn, "(SELECT COUNT(*) FROM solicitacoes WHERE id_solicitacao LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE email LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE nome LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE empresa LIKE '%".$chave."%') UNION (SELECT COUNT(*) FROM solicitacoes WHERE produtos LIKE '%".$chave."%')");
 			
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("SELECT * FROM solicitacoes WHERE id_solicitacao LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%'");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "SELECT * FROM solicitacoes WHERE id_solicitacao LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE email LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE nome LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE empresa LIKE '%".$chave."%' UNION SELECT * FROM solicitacoes WHERE produtos LIKE '%".$chave."%'");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 			else if ($filtro == "exata") {
 				// consulta o banco procurando por ids que correspondem exatamente a palavra chave
-				$consulta_todos_sql = mysql_query("(SELECT * FROM solicitacoes WHERE id_solicitacao = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE email = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE nome = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE empresa = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE produtos = '".$chave."') ORDER BY id_solicitacao DESC") or die (mysql_error());
+				$consulta_todos_sql = mysqli_query($conn, "(SELECT * FROM solicitacoes WHERE id_solicitacao = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE email = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE nome = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE empresa = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE produtos = '".$chave."') ORDER BY id_solicitacao DESC") or die (mysqli_error($conn));
 							
 				// numero total de resultados encontrados para a paginacao
-				$consulta_total = mysql_query("(SELECT COUNT(*) FROM solicitacoes WHERE id_solicitacao = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE email = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE nome = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE empresa = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE produtos = '".$chave."')");
+				$consulta_total = mysqli_query($conn, "(SELECT COUNT(*) FROM solicitacoes WHERE id_solicitacao = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE email = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE nome = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE empresa = '".$chave."') UNION (SELECT COUNT(*) FROM solicitacoes WHERE produtos = '".$chave."')");
 				
 				// numero total de resultados para exibir p/ usuario
-				$resultados_sql = mysql_query("(SELECT * FROM solicitacoes WHERE id_solicitacao = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE email = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE nome = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE empresa = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE produtos = '".$chave."')");
-				$resultados = mysql_num_rows($resultados_sql);
+				$resultados_sql = mysqli_query($conn, "(SELECT * FROM solicitacoes WHERE id_solicitacao = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE email = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE nome = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE empresa = '".$chave."') UNION (SELECT * FROM solicitacoes WHERE produtos = '".$chave."')");
+				$resultados = mysqli_num_rows($resultados_sql);
 			}
 		
 		break;
@@ -203,11 +203,11 @@ else if (isset($do) && $do == "pesquisar") {
 
 }
 else if (!isset($do) && $do != "pesquisar") {
-	$consulta_total = mysql_query("SELECT COUNT(*) FROM solicitacoes");
-	$consulta_todos_sql = mysql_query("SELECT * FROM solicitacoes ORDER BY id_solicitacao DESC LIMIT $primeiro_registro, $num_por_pagina");
+	$consulta_total = mysqli_query($conn, "SELECT COUNT(*) FROM solicitacoes");
+	$consulta_todos_sql = mysqli_query($conn, "SELECT * FROM solicitacoes ORDER BY id_solicitacao DESC LIMIT $primeiro_registro, $num_por_pagina");
 }
 
-list($total_produtos) = mysql_fetch_array($consulta_total);
+list($total_produtos) = mysqli_fetch_array($consulta_total);
 
 $total_paginas = $total_produtos/$num_por_pagina;
 
@@ -227,7 +227,7 @@ if ($pagina > 1) {
 		$anterior = "<a href=\"solicitacoes.php?pagina=$prev\">&lt; Anterior</a>";
 	}
 			
-} else { // senão não há link para a página anterior
+} else { // senï¿½o nï¿½o hï¿½ link para a pï¿½gina anterior
 		
 	$anterior = "Anterior";
 			
@@ -247,7 +247,7 @@ if ($total_paginas > $pagina) {
 	}
 			
 			
-} else { // senão não há link para a próxima página
+} else { // senï¿½o nï¿½o hï¿½ link para a prï¿½xima pï¿½gina
 		
 	$proximo = "Pr&oacute;ximo";
 			
@@ -258,7 +258,7 @@ $n_paginas = "";
 		
 for ($x=1; $x<=$total_paginas; $x++) {
 		
-	if ($x==$pagina) { // se estivermos na página corrente, não exibir o link para visualização desta página
+	if ($x==$pagina) { // se estivermos na pï¿½gina corrente, nï¿½o exibir o link para visualizaï¿½ï¿½o desta pï¿½gina
 	   $n_paginas .= " [$x] ";
 		
 	} else {
@@ -299,7 +299,7 @@ for ($x=1; $x<=$total_paginas; $x++) {
 
 function confirma() {
 
-	var ok = window.confirm('Você tem certeza que deseja remover o(s) produto(s) selecionado(s) do sistema?');
+	var ok = window.confirm('Vocï¿½ tem certeza que deseja remover o(s) produto(s) selecionado(s) do sistema?');
 	
 	if (ok) {
 		//document.apagaSolicitacoes.submit();
@@ -471,7 +471,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
           <?php
 		  		
 				# numero de solicitacoes encontradas
-				if (mysql_num_rows($consulta_todos_sql) == 0) {
+				if (mysqli_num_rows($consulta_todos_sql) == 0) {
 					// nenhum, exibir msg
 					print("<p align='center'>Nenhum solicita&ccedil;&atilde;o encontrada.</p>");
 				}
@@ -479,7 +479,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 				
 					$a = 1;
 			  
-					while ($r=mysql_fetch_array($consulta_todos_sql)) {
+					while ($r=mysqli_fetch_array($consulta_todos_sql)) {
 					
 						($a%2 == 1) ? print("<tr bgcolor='#ffffff' onMouseOver=\"this.bgColor='#FFE5CC'\" onMouseOut=\"this.bgColor='#ffffff'\">") : print("<tr bgcolor='#CFE4E9' onMouseOver=\"this.bgColor='#FFE5CC'\" onMouseOut=\"this.bgColor='#CFE4E9'\">");
 					

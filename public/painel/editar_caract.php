@@ -14,14 +14,14 @@ $msg = $_REQUEST["msg"];
 
 $cid = $_REQUEST["cid"]; // recebe id
 
-$consulta_sql = mysql_query("SELECT * FROM caracteristicas WHERE id_caracteristicas = '".$cid."'") or die(mysql_error()); // consulta dados do produto no BD
+$consulta_sql = mysqli_query($conn, "SELECT * FROM caracteristicas WHERE id_caracteristicas = '".$cid."'") or die(mysqli_error($conn)); // consulta dados do produto no BD
 
-$total = mysql_num_rows($consulta_sql); // numero de registros encontrados com aquele ID
+$total = mysqli_num_rows($consulta_sql); // numero de registros encontrados com aquele ID
 
 ($total == 0) ? $mensagem = "<div align='center'>Nenhuma caracter&iacute;stica foi encontrado com esse ID.<br><a href=\"javascript:history.go(-1);\">Voltar e tentar novamente</a></div><br />" : "";
 
 // obtem dados do banco
-while ($x=mysql_fetch_array($consulta_sql)) {
+while ($x=mysqli_fetch_array($consulta_sql)) {
 
 	$nome = $x["nome"];
 	$status = $x["status"];
@@ -48,7 +48,7 @@ if (isset($do) && $do == "alterar") {
 	//die($altera_bd); // DEBUG
 	
 	// executa sql
-	$salvar = mysql_query($altera_bd) or die (mysql_error());
+	$salvar = mysqli_query($conn, $altera_bd) or die (mysqli_error($conn));
 		
 	// redireciona
 	header("Location: lista_caract.php");
@@ -142,7 +142,7 @@ function validar(form) {
         <legend><label for="n_nome">Nome</label></legend>
        	<input name="n_nome" type="text" id="n_nome" title="Nome" size="35" maxlength="255" value="<?=$nome ?>" />
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "nome") ? print("<div class='invalido'>Você deve preencher o campo nome.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "nome") ? print("<div class='invalido'>Vocï¿½ deve preencher o campo nome.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-status" style="width:540px; margin:0 auto;">

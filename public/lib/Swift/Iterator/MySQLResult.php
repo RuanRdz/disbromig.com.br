@@ -11,7 +11,7 @@
 
 /**
  * Swift Mailer MySQL Resultset Iterator.
- * Iterates over MySQL Resultset from mysql_query().
+ * Iterates over MySQL Resultset from mysqli_query($conn, ).
  * @package Swift
  * @author Chris Corbyn <chris@w3style.co.uk>
  */
@@ -45,7 +45,7 @@ class Swift_Iterator_MySQLResult
   function Swift_Iterator_MySQLResult($rs)
   {
     $this->resultSet = $rs;
-    $this->numRows = mysql_num_rows($rs);
+    $this->numRows = mysqli_num_rows($rs);
   }
   /**
    * Get the resultset.
@@ -71,7 +71,7 @@ class Swift_Iterator_MySQLResult
   {
     if ($this->hasNext())
     {
-      $this->currentRow = mysql_fetch_array($this->resultSet);
+      $this->currentRow = mysqli_fetch_array($this->resultSet);
       $this->pos++;
       return true;
     }
@@ -88,7 +88,7 @@ class Swift_Iterator_MySQLResult
     if ($pos >= 0 && $pos < $this->numRows)
     {
       mysql_data_seek($this->resultSet, $pos);
-      $this->currentRow = mysql_fetch_array($this->resultSet);
+      $this->currentRow = mysqli_fetch_array($this->resultSet);
       mysql_data_seek($this->resultSet, $pos);
       $this->pos = $pos;
       return true;

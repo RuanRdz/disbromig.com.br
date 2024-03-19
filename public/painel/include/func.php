@@ -1,6 +1,11 @@
 <?php /*require_once("php7_mysql_shim.php");*/
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 # funcoes
+$conn = null;
 
 $url = "http://www.disbromig.com.br";
 $disbromig_mail = "disbromig@disbromig.com.br";
@@ -8,7 +13,7 @@ $assunto = "[Disbromig] - Fale Conosco";
 
 // conexao com o banco de dados
 function conectar() {
-	
+	global $conn;
 	// dados para conexao
 	
 	// HOSTNET
@@ -18,17 +23,24 @@ function conectar() {
 	$db_name = "pocinhos_disbromig_xdissql708090";
 	
 	// conexao
-	$conn = @mysql_connect($db_host,$db_user,$db_pass) or die ("Erro ao conectar com o Banco de Dados: ".mysql_error());
+	try {
+		$conn = @mysqli_connect($db_host,$db_user,$db_pass,$db_name);
+		mysqli_query($conn, 'SET character_set_connection=utf8mb4');
+    mysqli_query($conn, 'SET character_set_client=utf8mb4');
+    mysqli_query($conn, 'SET character_set_results=utf8mb4');
+	} catch (Exception $oException) {
+		echo $oException->getMessage();
+		die;
+	}
 	
 	// seleciona banco
-	$seleciona_bd = mysql_select_db($db_name);
-	
+	$seleciona_bd = mysqli_select_db($conn, $db_name);
 }
 
 // desconexao do BD
 function desconectar() {
-	
-	mysql_close();
+	global $conn;
+	mysqli_close($conn);
 	
 }
 
@@ -72,6 +84,7 @@ function limitar($txt, $limite) {
 
 // valida cookie do usuario
 function validar() {
+	global $conn;
 
 	if (!$_COOKIE["key"] && !$_COOKIE["usuario"]) {
 
@@ -90,9 +103,9 @@ function validar() {
 		$key = $_COOKIE["key"];
 		$user = $_COOKIE["usuario"];
 
-		$valida_cookie = mysql_query("SELECT * FROM usuarios WHERE nome = '".$user."'") or die(mysql_error());
+		$valida_cookie = mysqli_query($conn, "SELECT * FROM usuarios WHERE nome = '".$user."'") or die(mysqli_error());
 
-		while($v=mysql_fetch_array($valida_cookie)) {
+		while($v=mysqli_fetch_array($valida_cookie)) {
 			$n = $v["nome"];
 		}
 
