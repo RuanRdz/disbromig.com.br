@@ -1,0 +1,30 @@
+<?php ?><body dir="ltr" lang="pt-BR">
+
+
+
+<div id="footerBox">
+
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">Rua Vereador  Jurandino Andrade, 621- Dist. Ind. Jardim  Piemont - Betim - MG  Cep: 32689-330 <br />
+
+        Telefones: (31) 2576-0892 - (31) 3393-2484 - <a href="mailto:contato1@disbromig.com.br">contato1@disbromig.com.br</a> - <a href="mailto:disbromig@disbromig.com.br">disbromig@disbromig.com.br</a><br>
+
+
+
+
+
+<div style="float:right;position:relative;top:-25px">
+
+
+
+<a href="http://www.foton.com.br" target="blank"><img src="images/layout/logo_foton.png" style="border:0;"></a>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
