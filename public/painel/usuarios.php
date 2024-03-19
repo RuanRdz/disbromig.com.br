@@ -34,14 +34,14 @@ if (isset($do) && $do == "novo") {
 	if (mysqli_num_rows($valida_email) == 1) { exit;}
 
 	// salva novo usuario no BD
-	$novo_usuario_sql = mysqli_query($conn, "INSERT INTO usuarios (nome, email, senha, chave) VALUES ('".$nome."','".$email."','".$senha."','".$chave."')") or die ("Erro ao inserir novo usu�rio no Banco de Dados: ".mysqli_error($conn));
+	$novo_usuario_sql = mysqli_query($conn, "INSERT INTO usuarios (nome, email, senha, chave) VALUES ('".$nome."','".$email."','".$senha."','".$chave."')") or die ("Erro ao inserir novo usuário no Banco de Dados: ".mysqli_error($conn));
 
 }
 else if (isset($do) && $do == "remover") {
 
 	$uid = $_REQUEST["uid"];
 	
-	$apaga_sql = mysqli_query($conn, "DELETE FROM usuarios WHERE id='".$uid."'") or die ("Erro ao remover usu�rio do sistema: ".$mysqli_error($conn));
+	$apaga_sql = mysqli_query($conn, "DELETE FROM usuarios WHERE id='".$uid."'") or die ("Erro ao remover usuário do sistema: ".$mysqli_error($conn));
 	
 	header("Location: usuarios.php");
 
@@ -74,13 +74,13 @@ function validar(form) {
 	
 		if (novo_nome.value == "") {
 		
-			alert("Voc� deve digitar um nome de usu�rio.");
+			alert("Você deve digitar um nome de usuário.");
 			return false;
 		
 		}
 		else if (novo_senha.value == "") {
 		
-			alert("N�o � poss�vel cadastrar um novo usu�rio sem uma senha.");
+			alert("Não é possível cadastrar um novo usuário sem uma senha.");
 			return false;
 		
 		}		
@@ -92,7 +92,7 @@ function validar(form) {
 
 function confirma() {
 
-	var ok = window.confirm('Voc� tem certeza que deseja remover este usu�rio do sistema?');
+	var ok = window.confirm('Você tem certeza que deseja remover este usuário do sistema?');
 	
 	if (ok) { return true; }
 	else { return false; }
@@ -270,7 +270,7 @@ function salvar() {
 					
 					($r["nome"] == $_COOKIE["usuario"]) ? print("<a href='perfil.php'><img src='../images/editar.gif' border='0' title='Editar Dados' alt='Editar'></a>") : print("<a href=\"editar_usuario.php?uid=".$r["id"]."\"><img src='../images/editar.gif' border='0' title='Editar Dados' alt='Editar'></a>");
 					
-					echo "<a onclick='return confirma();' href=\"usuarios.php?do=remover&uid=".$r["id"]."\"><img src='../images/deletar.gif' border='0' title='Remover usu�rio do sistema' alt='Remover'></a></span></td>";
+					echo "<a onclick='return confirma();' href=\"usuarios.php?do=remover&uid=".$r["id"]."\"><img src='../images/deletar.gif' border='0' title='Remover usuário do sistema' alt='Remover'></a></span></td>";
 						
 					echo "</tr>";
 

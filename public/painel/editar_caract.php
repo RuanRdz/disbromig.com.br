@@ -142,7 +142,7 @@ function validar(form) {
         <legend><label for="n_nome">Nome</label></legend>
        	<input name="n_nome" type="text" id="n_nome" title="Nome" size="35" maxlength="255" value="<?=$nome ?>" />
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "nome") ? print("<div class='invalido'>Voc� deve preencher o campo nome.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "nome") ? print("<div class='invalido'>Você deve preencher o campo nome.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-status" style="width:540px; margin:0 auto;">

@@ -90,13 +90,13 @@ function validar(form) {
 	
 		if (nome.value == "") {
 		
-			alert("Voc� deve digitar um novo nome de usu�rio.");
+			alert("Você deve digitar um novo nome de usuário.");
 			return false;
 		
 		}
 		else if (email.value == "") {
 		
-			alert("Voc� deve digitar um endere�o de e-mail v�lido.");
+			alert("Você deve digitar um endereço de e-mail válido.");
 			return false;
 		
 		}
@@ -212,13 +212,13 @@ function salvar() {
               </tr>
               <tr>
                 <td width="39%" valign="top">E-mail:</td>
-                <td width="61%"><input type="text" name="n_email" id="n_email" title="Digite um novo endere�o de e-mail." value="<?=$uemail; ?>" />
+                <td width="61%"><input type="text" name="n_email" id="n_email" title="Digite um novo endereço de e-mail." value="<?=$uemail; ?>" />
                 <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "email") ? print("<div class='invalido'>N&atilde;o &eacute; permitido mais de um usu&aacute;rio com mesmo endere&ccedil;o de e-mail no sistema.</div>") : ""; ?>
                 </td>
               </tr>
               <tr>
                 <td valign="top">Nova Senha:</td>
-                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso n�o queira alterar." /> 
+                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso não queira alterar." /> 
                   <br /><span class="tips-caracteristicas">(deixar em branco caso n&atilde;o deseje alterar).</span></td>
               </tr>
             </table>

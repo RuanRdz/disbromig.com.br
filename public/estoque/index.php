@@ -55,15 +55,15 @@ conectar();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name="description" content="A Disbromig Ferramentas Pneum�ticas � uma distribuidora autorizada da marca Brobr�s, atua distribuindo ferramentas pneum�ticas para os setores de Minera��o, Sider�rgicas, Fundi��es, Metal�rgicas, Eletro-Eletr�nicas, Eletro-Dom�sticos, Ind�strias Aliment�cias, Auto Pe�as, Ind�strias Automobil�sticas, Cimenteira e Constru��o Civil.">
+<meta name="description" content="A Disbromig Ferramentas Pneumáticas é uma distribuidora autorizada da marca Brobrás, atua distribuindo ferramentas pneumáticas para os setores de Mineração, Siderúrgicas, Fundições, Metalúrgicas, Eletro-Eletrônicas, Eletro-Domésticos, Indústrias Alimentícias, Auto Peças, Indústrias Automobilísticas, Cimenteira e Construção Civil.">
 <meta http-equiv="cache-control" content="no-cache" />
-<meta name="keywords" content="bomba imers�o centr�fuga desincrustadores �mbolos esmerilhadeiras ferramentaria furadeira lixadeiras pistolas  marteletes socadores talhas turbinas troles vibradores">
+<meta name="keywords" content="bomba imersão centrífuga desincrustadores êmbolos esmerilhadeiras ferramentaria furadeira lixadeiras pistolas  marteletes socadores talhas turbinas troles vibradores">
 
-<meta name="author" content="Disbromig Ferramentas Pneum�ticas/ www.disbromig.com.br">
+<meta name="author" content="Disbromig Ferramentas Pneumáticas/ www.disbromig.com.br">
 
 <meta name="distribution" content="Global">
 
-<meta name="copyright" content="Disbromig Ferramentas Pneum�ticas � 2007 ">
+<meta name="copyright" content="Disbromig Ferramentas Pneumáticas © 2007 ">
 
 <meta name="rating" content="General">
 
@@ -112,7 +112,7 @@ conectar();
             <li><a href="../produtos.php?do=pesquisar&amp;campo=titulo&amp;filtro=qualquer&amp;chave=talha">Talhas</a></li>
             <li><a href="../produtos.php?do=pesquisar&amp;campo=titulo&amp;filtro=qualquer&amp;chave=trole">Troles</a></li>
             <li><a href="../produtos.php?do=pesquisar&amp;campo=titulo&amp;filtro=qualquer&amp;chave=vibrador">Vibradores</a></li>
-            <li><a href="../produtos.php?do=pesquisar&amp;campo=titulo&amp;filtro=qualquer&amp;chave=acess&oacute;rio">Acess�rios</a></li>
+            <li><a href="../produtos.php?do=pesquisar&amp;campo=titulo&amp;filtro=qualquer&amp;chave=acess&oacute;rio">Acessórios</a></li>
         </ul>
         <!--[if lte IE 6]></td></tr></table></a><![endif]-->
 	    </li>    

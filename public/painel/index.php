@@ -21,7 +21,7 @@ if ($do == "login") {
 	
 	$smd5 = md5($senha);
 	
-	$valida_usuario = mysqli_query($conn, "SELECT * FROM usuarios WHERE nome='".$user."' AND senha='".$smd5."' LIMIT 1") or die ("Erro ao validar usu�rio: ".mysqli_error($conn));
+	$valida_usuario = mysqli_query($conn, "SELECT * FROM usuarios WHERE nome='".$user."' AND senha='".$smd5."' LIMIT 1") or die ("Erro ao validar usuário: ".mysqli_error($conn));
 
 	if (mysqli_num_rows($valida_usuario) == 1) {
 	
@@ -72,7 +72,7 @@ else if ($do == "logout") {
 function validar(form) {
 	
 	with (form) {
-		if (form.usuario.value == "") { alert("Por favor entre com o nome de usu�rio"); return false; }
+		if (form.usuario.value == "") { alert("Por favor entre com o nome de usuário"); return false; }
 		else if (form.senha.value == "") { alert("Por favor entre com a senha"); return false; }
 		else { return true; }
 	}
@@ -115,7 +115,7 @@ function validar(form) {
 	
 		if (isset($_REQUEST["do"]) && $_REQUEST["do"] == "aviso") {
 		
-			print("<div class='invalido'>Dados inv�lidos ou usu�rio inexistente.</div>");
+			print("<div class='invalido'>Dados inválidos ou usuário inexistente.</div>");
 			
 		}
 		

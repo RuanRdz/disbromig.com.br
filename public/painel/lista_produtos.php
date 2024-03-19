@@ -224,7 +224,7 @@ if ($pagina > 1) {
 		$anterior = "<a href=\"lista_produtos.php?pagina=$prev&listar=".$_REQUEST["listar"]."\">&lt; Anterior</a>";
 	}
 			
-} else { // sen�o n�o h� link para a p�gina anterior
+} else { // senão não há link para a página anterior
 		
 	$anterior = "Anterior";
 			
@@ -244,7 +244,7 @@ if ($total_paginas > $pagina) {
 	}
 			
 			
-} else { // sen�o n�o h� link para a pr�xima p�gina
+} else { // senão não há link para a próxima página
 		
 	$proximo = "Pr&oacute;ximo";
 			
@@ -255,7 +255,7 @@ $n_paginas = "";
 		
 for ($x=1; $x<=$total_paginas; $x++) {
 		
-	if ($x==$pagina) { // se estivermos na p�gina corrente, n�o exibir o link para visualiza��o desta p�gina
+	if ($x==$pagina) { // se estivermos na página corrente, não exibir o link para visualização desta página
 	   $n_paginas .= " [$x] ";
 		
 	} else {
@@ -303,13 +303,13 @@ function validar(form) {
 	
 		if (novo_nome.value == "") {
 		
-			alert("Voc� deve digitar um nome de usu�rio.");
+			alert("Você deve digitar um nome de usuário.");
 			return false;
 		
 		}
 		else if (novo_senha.value == "") {
 		
-			alert("N�o � poss�vel cadastrar um novo usu�rio sem uma senha.");
+			alert("Não é possível cadastrar um novo usuário sem uma senha.");
 			return false;
 		
 		}		
@@ -321,7 +321,7 @@ function validar(form) {
 
 function confirma() {
 
-	var ok = window.confirm('Voc� tem certeza que deseja remover o(s) produto(s) selecionado(s) do sistema?');
+	var ok = window.confirm('Você tem certeza que deseja remover o(s) produto(s) selecionado(s) do sistema?');
 	
 	if (ok) {
 		//document.apagaProdutos.submit();

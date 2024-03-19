@@ -71,13 +71,13 @@ function validar(form) {
 	
 		if (nome.value == "") {
 		
-			alert("Voc� deve digitar um novo nome de usu�rio.");
+			alert("Você deve digitar um novo nome de usuário.");
 			return false;
 		
 		}
 		else if (email.value == "") {
 		
-			alert("Voc� deve digitar um endere�o de e-mail v�lido.");
+			alert("Você deve digitar um endereço de e-mail válido.");
 			return false;
 		
 		}
@@ -189,11 +189,11 @@ function salvar() {
               </tr>
               <tr>
                 <td width="32%" valign="top">E-mail:</td>
-                <td width="68%"><input type="text" name="n_email" id="n_email" title="Digite um novo endere�o de e-mail." value="<?=$meu_email; ?>" /></td>
+                <td width="68%"><input type="text" name="n_email" id="n_email" title="Digite um novo endereço de e-mail." value="<?=$meu_email; ?>" /></td>
               </tr>
               <tr>
                 <td valign="top">Senha:</td>
-                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso n�o queira alterar." /> 
+                <td><input type="password" name="n_senha" id="n_senha" title="Nova Senha. Deixar em branco caso não queira alterar." /> 
                   <span class="tips-caracteristicas">(deixar em branco caso n&atilde;o deseje alterar).</span></td>
               </tr>
             </table>

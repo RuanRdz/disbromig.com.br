@@ -29,12 +29,12 @@ if (isset($do) && $do == "up") {
 		// tamanho em bytes, se maior que 15mb nao ira continuar
 		$tamanho_limite = 15728640;
 		if ($tamanho > $tamanho_limite) {
-			die ("Arquivo muito grande (".$tamanho."), o tamanho m�ximo permitido em bytes � de ".$tamanho_limite.", <a href='upload.php'>volte e tente novamente</a>.");
+			die ("Arquivo muito grande (".$tamanho."), o tamanho máximo permitido em bytes é de ".$tamanho_limite.", <a href='upload.php'>volte e tente novamente</a>.");
 		}
 		else {
 			// realiza upload no servidor
 			
-			// remove todas as planilhas anteriores para liberar espa�o
+			// remove todas as planilhas anteriores para liberar espaço
 			if (file_exists($_SERVER['DOCUMENT_ROOT']."/estoque/planilha.xls")) {
 				unlink($_SERVER['DOCUMENT_ROOT']."/estoque/planilha.xls") or die();
 			}
@@ -44,7 +44,7 @@ if (isset($do) && $do == "up") {
 		}
 	}
 	else if ($arquivo["type"] != "application/vnd.ms-excel") {
-		die ("A extens�o do arquivo n�o � .xls, <a href='upload.php'>volte e tente novamente</a> com uma planilha do excel (*.xls).");
+		die ("A extensão do arquivo não é .xls, <a href='upload.php'>volte e tente novamente</a> com uma planilha do excel (*.xls).");
 	}
 
 }
@@ -153,7 +153,7 @@ function validar(form) {
 	
 		if (xls.value == "") {
 		
-			alert("Voc� deve selecionar um arquivo em seu computador (Apenas planilhas do excel - *.XLS).");
+			alert("Você deve selecionar um arquivo em seu computador (Apenas planilhas do excel - *.XLS).");
 			return false;
 		
 		}		
@@ -170,11 +170,11 @@ function validarLogin(form) {
 		var senha = document.getElementById("senhaPublic");
 		
 		if (login.value == "") {
-			alert("Voc� deve especificar um login.");
+			alert("Você deve especificar um login.");
 			return false;
 		}
 		else if (senha.value == "") {
-			alert("Voc� deve especificar uma senha.");
+			alert("Você deve especificar uma senha.");
 			return false;
 		}
 		else {

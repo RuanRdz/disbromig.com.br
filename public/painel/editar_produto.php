@@ -88,7 +88,7 @@ if (isset($do) && $do == "alterar") {
 
 	// valida tamanho
 	if ($tamanho_foto > 407936) {
-		print "<script language='javascript'> alert('A foto n�o pode ser maior que 400 kb'); window.history.go(-1); </script>\n";
+		print "<script language='javascript'> alert('A foto não pode ser maior que 400 kb'); window.history.go(-1); </script>\n";
 		exit;
 	}
 
@@ -203,7 +203,7 @@ if (isset($do) && $do == "alterar") {
 			} # fim - altera img se for muito grande
 			
 			}
-			else { die("A imagem forncedia n�o � v�lida, seu formato deve ser JPG, GIF ou PNG.<br><a href='javascript:history.go(-1)'>Clique aqui para voltar</a>"); }
+			else { die("A imagem forncedia não é válida, seu formato deve ser JPG, GIF ou PNG.<br><a href='javascript:history.go(-1)'>Clique aqui para voltar</a>"); }
 	
 	}
 	
@@ -338,10 +338,10 @@ function validar(form) {
 	
 	with(form) {
 	
-		if (form.titulo.value == "") { alert('Digite um t�tulo para este produto.'); return false; }
-		else if (form.codigo.value == "") { alert('Digite o c�digo do produto.'); return false; }
+		if (form.titulo.value == "") { alert('Digite um título para este produto.'); return false; }
+		else if (form.codigo.value == "") { alert('Digite o código do produto.'); return false; }
 		else if (form.categoria.selected == "1") { alert('Informe o valor do produto.'); return false; }
-		else if (document.getElementById('promo').checked == true && document.getElementById('promo-valor').value == "") { alert("Informe a porcentagem de promo��o para este produto."); return false; }
+		else if (document.getElementById('promo').checked == true && document.getElementById('promo-valor').value == "") { alert("Informe a porcentagem de promoção para este produto."); return false; }
 		else { 
 			
 			var form = $('alteraDados');
@@ -449,14 +449,14 @@ function adicionar(valor) {
         <legend><label for="titulo">T&iacute;tulo</label></legend>
        	<input name="titulo" type="text" id="titulo" title="T&iacute;tulo" size="70" maxlength="255" value="<?=$titulo ?>" />
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "titulo") ? print("<div class='invalido'>Voc� deve preencher o campo t�tulo.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "titulo") ? print("<div class='invalido'>Você deve preencher o campo título.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-cod">
         <legend><label for="codigo">C&oacute;digo</label></legend>
         <input name="codigo" type="text" id="codigo" title="C&oacute;digo" size="70" maxlength="20" value="<?=$codigo ?>" />
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "codigo") ? print("<div class='invalido'>Voc� deve preencher o campo c�digo.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "codigo") ? print("<div class='invalido'>Você deve preencher o campo código.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-valor">
@@ -471,7 +471,7 @@ function adicionar(valor) {
             <option value="2" <? ($categoria == 2) ? print("selected='selected'") : ""; ?>>M&aacute;quinas</option>
         </select>
         *
-        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "categoria") ? print("<div class='invalido'>Voc� deve selecionar uma categoria.</div>") : ""; ?>
+        <? (isset($do) && $do == "aviso" && isset($msg) && $msg == "categoria") ? print("<div class='invalido'>Você deve selecionar uma categoria.</div>") : ""; ?>
         </fieldset>
         
         <fieldset id="field-desc">
