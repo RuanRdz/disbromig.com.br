@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 # busca_produtos.php - lista produtos pelo ajax
 
 include("painel/include/func.php");

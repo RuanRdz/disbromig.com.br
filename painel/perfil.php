@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 
 # Meus dados - dados do usuario logado
 
@@ -13,9 +13,9 @@ $do = $_REQUEST["do"];
 
 $meu_id_sql = mysqli_query($conn, "SELECT id, email, chave FROM usuarios WHERE nome = '".$_COOKIE["usuario"]."'") or die(mysqli_error($conn));
 	
-$meu_id = mysql_result($meu_id_sql,0);
-$meu_email = mysql_result($meu_id_sql,0,1);
-$minha_chave = mysql_result($meu_id_sql,0,2);
+$meu_id = mysqli_result($meu_id_sql,0);
+$meu_email = mysqli_result($meu_id_sql,0,1);
+$minha_chave = mysqli_result($meu_id_sql,0,2);
 
 if (isset($do) && $do == "alterar") {
 

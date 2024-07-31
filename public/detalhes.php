@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 # detalhes.php - pagina com detalhes dos produtos
  
 require("painel/include/func.php");

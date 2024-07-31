@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 # solicitacoes.php - lista solicitacoes realizadas pelo formulario no site
  
 require("include/func.php");

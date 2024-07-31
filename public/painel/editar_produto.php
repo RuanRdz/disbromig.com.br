@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 
 # editar_produto - altera dados de um produto cadastrado
 
@@ -299,7 +299,7 @@ if (isset($do) && $do == "alterar") {
 				// busca caracteristicas
 				$caracteristicas_sql = mysqli_query($conn, "SELECT nome FROM caracteristicas WHERE id_caracteristicas = ".$caract_id[$c]."");
 				
-				$caract_texto = mysql_result($caracteristicas_sql,0);
+				$caract_texto = mysqli_result($caracteristicas_sql,0);
 
 				if ($caract_valor[$c] != "" || !is_null($caract_valor[$c]) || !empty($caract_valor[$c])) {
 					// salva caracteristicas

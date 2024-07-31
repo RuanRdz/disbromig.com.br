@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 
 # informacoes.php - pagina com formulario para solicitacao de informacoes
 require("painel/include/func.php");

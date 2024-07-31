@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 
 # editar_produto - altera dados de um produto cadastrado
 

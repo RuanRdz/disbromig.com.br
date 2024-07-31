@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 
 # produto.php - Cadastro de novo produto
 
@@ -197,7 +197,7 @@ if (isset($do) && $do == "novo") {
 		
 		// id do novo produto
 		$produto_id_sql = mysqli_query($conn, "SELECT id FROM produtos WHERE chave='".$chave_uniq."'");
-		$prod_id = mysql_result($produto_id_sql,0);
+		$prod_id = mysqli_result($produto_id_sql,0);
 		
 		# ADICIONA NOVAS CARACTERISTICAS TECNICAS NA TABELA caracteristcas E DEPOIS caract_reg SE HOUVER NOVAS
 		
@@ -242,7 +242,7 @@ if (isset($do) && $do == "novo") {
 				// busca caracteristicas
 				$caracteristicas_sql = mysqli_query($conn, "SELECT nome FROM caracteristicas WHERE id_caracteristicas = ".$caract_id[$c]."");
 				
-				$caract_texto = mysql_result($caracteristicas_sql,0);
+				$caract_texto = mysqli_result($caracteristicas_sql,0);
 				
 				// salva caracteristicas
 				$caract_sql = mysqli_query($conn, "INSERT INTO caract_reg (produto, caract, valor) VALUES ('".$prod_id."', '".$caract_texto."','".$caract_valor[$c]."')");

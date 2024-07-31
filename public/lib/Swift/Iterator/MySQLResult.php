@@ -87,9 +87,9 @@ class Swift_Iterator_MySQLResult
   {
     if ($pos >= 0 && $pos < $this->numRows)
     {
-      mysql_data_seek($this->resultSet, $pos);
+      mysqli_data_seek($this->resultSet, $pos);
       $this->currentRow = mysqli_fetch_array($this->resultSet);
-      mysql_data_seek($this->resultSet, $pos);
+      mysqli_data_seek($this->resultSet, $pos);
       $this->pos = $pos;
       return true;
     }

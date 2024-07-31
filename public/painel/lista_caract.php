@@ -1,4 +1,4 @@
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 
 # lista_caract.php - Lista caracteristicas tecnicas cadastradas no sistema
 

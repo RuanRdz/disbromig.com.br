@@ -6,7 +6,7 @@
   
     <div class="conteudo-texto">
     
-<?php /*require_once("php7_mysql_shim.php");*/
+<?php 
 
 	while ($p=mysqli_fetch_array($produtos_sql)) {
 				 	

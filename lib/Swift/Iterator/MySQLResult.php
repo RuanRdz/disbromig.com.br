@@ -1,4 +1,6 @@
-<?php require_once("php7_mysql_shim.php");
+<?php 
+
+require_once("php7_mysql_shim.php");
 
 /**
  * Swift Mailer MySQL Resultset Iterator
@@ -45,7 +47,7 @@ class Swift_Iterator_MySQLResult
   function Swift_Iterator_MySQLResult($rs)
   {
     $this->resultSet = $rs;
-    $this->numRows = mysql_num_rows($rs);
+    $this->numRows = mysqli_num_rows($rs);
   }
   /**
    * Get the resultset.
@@ -71,7 +73,7 @@ class Swift_Iterator_MySQLResult
   {
     if ($this->hasNext())
     {
-      $this->currentRow = mysql_fetch_array($this->resultSet);
+      $this->currentRow = mysqli_fetch_array($this->resultSet);
       $this->pos++;
       return true;
     }
@@ -87,9 +89,9 @@ class Swift_Iterator_MySQLResult
   {
     if ($pos >= 0 && $pos < $this->numRows)
     {
-      mysql_data_seek($this->resultSet, $pos);
-      $this->currentRow = mysql_fetch_array($this->resultSet);
-      mysql_data_seek($this->resultSet, $pos);
+      mysqli_data_seek($this->resultSet, $pos);
+      $this->currentRow = mysqli_fetch_array($this->resultSet);
+      mysqli_data_seek($this->resultSet, $pos);
       $this->pos = $pos;
       return true;
     }
