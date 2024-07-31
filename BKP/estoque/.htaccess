@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Disbromig"
+AuthUserFile /home/disbromig/www/estoque/.htpasswd
+Require valid-user
