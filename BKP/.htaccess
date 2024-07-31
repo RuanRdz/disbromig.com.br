@@ -1,5 +1,0 @@
-#php_flag authmail.debug ON
-#php_value authmail.address disbromig@disbromig.com.br
-#php_value authmail.smtp_account disbromig=disbromig.com.br
-#php_value authmail.smtp smtp.disbromig.com.br
-#php_value authmail.password 'dis5211'
